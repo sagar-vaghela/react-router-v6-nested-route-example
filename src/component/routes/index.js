@@ -1,10 +1,12 @@
 import React from 'react'
-import { BrowserRouter as Router, Link, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Link, Routes, Route } from "react-router-dom";
 import routes from './routes';
-function RouteResolver({ key, ...data }) {
-  console.log(data,"data");
-    let Component = data.type;
-    return <Component {...data} />;
+import Home from '../Home';
+function RouteResolver({ ...data }) {
+  let Component = data.type;
+  console.log(data,"data", Component);
+  
+    return <Component path={data.path} element={data.component}  />;
   }
 
 const OurRoutes = () => {
@@ -21,8 +23,9 @@ const OurRoutes = () => {
         Posts
       </Link>
     </nav>
-    {routes.map((route,index) => [<RouteResolver {...route} key={index}/>])}
-    
+    <Routes>
+    {routes.map((route) => [<RouteResolver {...route}/>])}
+    </Routes>
 
     {/* <Routes>
       <Route path="/" element={<Home />} />
