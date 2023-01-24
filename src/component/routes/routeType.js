@@ -1,18 +1,11 @@
 import React, { useEffect } from "react";
 import { Route, Navigate } from "react-router-dom";
 
-
 function ComponentWrapper({ children }) {
-
   return children;
 }
 
 export function PublicRoute({ component: Component, ...rest }) {
-  // const location = useLocation();
-  // useEffect(() => {
-  //   scrollToTop();
-  // }, [location]);
-
   return (
     <Route
       {...rest}
@@ -45,8 +38,6 @@ export function DashboardRoute({ component: Component, ...rest }) {
       render={(props) => {
         return (
           <>
-            {/* <DecisionPendingModal /> */}
-
             <ComponentWrapper>
               <Component {...props} />
             </ComponentWrapper>
