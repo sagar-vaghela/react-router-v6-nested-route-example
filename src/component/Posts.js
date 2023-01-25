@@ -1,26 +1,44 @@
 import React from 'react'
-import { Outlet, Route, Routes, useRoutes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import PostList from './PostList';
-import route, { ROUTE_DEFAULT } from './routes/route';
 import Post from './Post';
 
-const RouteResolver = ({ ...data }) => {
-  let Component = data.type;
-  return <Component path={data.path} element={data.component} />;
-}
-
 const Posts = () => {
-  const innerRoute = [
-    route("/", <PostList />, ROUTE_DEFAULT),
-    route(":slug", <Post />, ROUTE_DEFAULT),
-  ]
+  const Childoute = ({
+    element, path
+  }) => {
+    let Component = element.type;
+    return (
+      <Route
+        path={path}
+        element={
+          <Component />
+        }
+      />
+    );
+  }
+
+  const data = [{
+    element: <PostList />,
+    path: "/",
+  }, {
+    element: <Post />,
+    path: "/:slug/*",
+  },]
+
   return (
     <div style={{ padding: 20 }}>
       <h2>Blog</h2>
-      {/* render any matching child */}
-      {/* <Outlet /> */}
       <Routes>
-        {innerRoute.map((route) => [<RouteResolver {...route} />])}
+        {/* {innerRoute.map((route) => [<RouteResolver {...route}/>])} */}
+        {data.map(({ path, element: Component }) => {
+          return <Childoute
+            key={path}
+            tabsData={data}
+            path={path}
+            element={Component}
+          />
+        })}
       </Routes>
     </div>
   )
